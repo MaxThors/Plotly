@@ -70,8 +70,8 @@ function buildCharts(sample) {
 
     // 8. Create the trace for the bar chart. 
     var trace = [{
-      x: sampleValues,
-      y: otuID,
+      values: sampleValues,
+      labels: otuID,
       text: otuLabels,
       type: 'bar'
     }
