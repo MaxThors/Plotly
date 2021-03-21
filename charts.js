@@ -1,4 +1,4 @@
-function init() {
+  function init() {
   var selector = d3.select("#selDataset");
 
   d3.json("samples.json").then((data) => {
@@ -8,15 +8,19 @@ function init() {
       selector
         .append("option")
         .text(sample)
-        .property("value", sample);
+        .property("value", sample);        
     });
+     // Use the first sample from the list to build the initial plots
+    var firstSample = sampleNames[0];
+    buildCharts(firstSample);
+    buildMetadata(firstSample);
 })}
 
-init();
+
 
 function optionChanged(newSample) {
   buildMetadata(newSample);
-  // buildCharts(newSample);
+  buildCharts(newSample);
 }
 function buildMetadata(sample) {
   d3.json("samples.json").then((data) => {
@@ -46,9 +50,9 @@ function buildCharts(sample) {
     // var chartID = sampleArray.filter(function(ID){
     //   return buildCharts(sampleArray) == ID;
     // });
-    var samples = metadata.filter(ID => buildCharts(samples) == ID);
+    var chartID = samples.filter(sample => buildCharts(samples) == sample);
     //  5. Create a variable that holds the first sample in the array.
-    var firstID = samples[0]
+    var firstID = chartID[0]
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     var otuID = samples.otu_ids
@@ -82,5 +86,25 @@ function buildCharts(sample) {
       };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newplot("bar", barData, barLayout)
+    // 1. Create the trace for the bubble chart.
+    var bubbleData = [{
+      x: otuID,
+      y: sampleValues,
+      text: otuLabels,
+      
+    }
+
+      ];
+    
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+          
+      };
+    
+    // 3. Use Plotly to plot the data with the layout.
+        
+
   });
 }
+
+init();
